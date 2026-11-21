@@ -1,0 +1,34 @@
+<section class="wishes" aria-labelledby="wishes-title">
+  <p class="eyebrow">Ucapan buat pengantin</p>
+  <h2 id="wishes-title">Titipkan ucapan</h2>
+  <p class="intro">
+    Tinggalkan ucapan ringkas untuk pengantin. Ucapan ini hanya disimpan sementara dalam pelayar
+    ini.
+  </p>
+
+  <form (submit)="submit($event)">
+    <label for="wish-message">Ucapan anda</label>
+    <textarea
+      id="wish-message"
+      [value]="message()"
+      (input)="updateMessage($event)"
+      maxlength="500"
+      placeholder="Wishing you both a lifetime of happiness…"
+    ></textarea>
+    <button type="submit">Hantar ucapan</button>
+  </form>
+  @if (error()) {
+    <p class="error" role="alert">{{ error() }}</p>
+  }
+
+  @if (wishes().length > 0) {
+    <ul class="wish-list">
+      @for (wish of wishes(); track wish.id) {
+        <li>
+          <p>“{{ wish.message }}”</p>
+          <span>— {{ wish.guestName }}</span>
+        </li>
+      }
+    </ul>
+  }
+</section>

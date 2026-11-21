@@ -1,0 +1,11 @@
+<main class="guest-feature-page">
+  <a class="guest-feature-back" [routerLink]="['/e', event().slug, 'guest']"
+    >&larr; Kembali ke pusat kenangan</a
+  >
+  <header class="guest-feature-header">
+    <p class="guest-feature-label">Ucapan buat pengantin</p>
+    <h1 class="guest-feature-title">{{ event().coupleNames }}</h1>
+    <p class="guest-feature-description">Ucapan anda hanya disimpan sementara dalam pelayar ini.</p>
+  </header>
+  <app-guest-wishes [eventId]="event().id" [guestName]="guestName()" />
+</main>

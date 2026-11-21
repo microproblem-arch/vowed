@@ -1,0 +1,118 @@
+<section
+  class="camera"
+  [class.camera--fullscreen]="status() === 'ready' || status() === 'review'"
+  [class.camera--hidden]="hideLauncher() && status() === 'idle'"
+  aria-label="Camera capture"
+>
+  @if (status() === 'idle' || status() === 'requesting' || status() === 'error') {
+    <div class="camera-heading">
+      <p class="eyebrow">A moment to remember</p>
+      <h2 id="camera-title">Take a photo</h2>
+      <p>Capture a memory to add to your temporary album for this session.</p>
+    </div>
+  }
+
+  @if (status() === 'idle' && !hideLauncher()) {
+    <button class="button button-primary" type="button" (click)="openCamera()">Open camera</button>
+  }
+
+  @if (status() === 'requesting') {
+    <p class="camera-status" role="status">Requesting camera access…</p>
+  }
+
+  @if (status() === 'ready') {
+    <div class="camera-stage">
+      <video
+        #video
+        autoplay
+        muted
+        playsinline
+        [class.mirrored]="facingMode() === 'user'"
+        aria-label="Live camera preview"
+      ></video>
+      <div class="camera-shade"></div>
+      <button
+        class="icon-control close-control"
+        type="button"
+        (click)="close()"
+        aria-label="Close camera"
+      >
+        &#x2190;
+      </button>
+      <div class="camera-event">
+        <strong>{{ coupleNames() }}</strong><span>{{ dateLabel() }}</span>
+      </div>
+      @if (captureNotice()) {
+        <p class="capture-notice" role="status">{{ captureNotice() }}</p>
+      }
+      <span class="album-count"
+        ><strong>{{ remainingPhotoCount() }}</strong
+        ><span>more photos</span></span
+      >
+      @if (capturedImageUrl()) {
+        <button
+          class="latest-photo"
+          type="button"
+          (click)="openLatestPhoto()"
+          aria-label="Review your most recent photo"
+        >
+          <img [src]="capturedImageUrl()" alt="Most recently captured photo" />
+          <span>Review</span>
+        </button>
+      }
+      @if (canSwitchCamera()) {
+        <button
+          class="icon-control switch-control"
+          type="button"
+          (click)="switchCamera()"
+          aria-label="Switch camera"
+        >
+          &#x21c4;
+        </button>
+      }
+      <div class="capture-control">
+        <button
+          class="shutter"
+          type="button"
+          (click)="capture()"
+          [disabled]="isCapturing() || remainingPhotoCount() === 0"
+          aria-label="Capture photo"
+        >
+          <span></span>
+        </button>
+        <span>{{ remainingPhotoCount() === 0 ? 'Temporary album full' : 'Capture a memory' }}</span>
+      </div>
+    </div>
+  }
+
+  @if (status() === 'review') {
+    <div class="camera-stage preview-stage">
+      <img [src]="capturedImageUrl()" alt="Your captured photo preview" />
+      <div class="camera-shade"></div>
+      <button
+        class="icon-control close-control"
+        type="button"
+        (click)="close()"
+        aria-label="Close photo review"
+      >
+        &#x2190;
+      </button>
+      <div class="camera-event">
+        <strong>{{ coupleNames() }}</strong><span>Photo preview</span>
+      </div>
+    </div>
+    <div class="preview-actions">
+      <p>Saved in your temporary album</p>
+      <button class="button button-primary" type="button" (click)="backToCamera()">
+        Back to camera
+      </button>
+    </div>
+  }
+
+  @if (status() === 'error') {
+    <p class="camera-error" role="alert">{{ errorMessage() }}</p>
+    <button class="button button-secondary" type="button" (click)="openCamera()">
+      Try camera again
+    </button>
+  }
+</section>

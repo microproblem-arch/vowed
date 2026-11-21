@@ -1,0 +1,54 @@
+<main class="guest-feature-page">
+  <a class="guest-feature-back" [routerLink]="['/e', event().slug, 'guest']"
+    >&larr; Kembali ke pusat kenangan</a
+  >
+  <header class="guest-feature-header">
+    <p class="guest-feature-label">Pilih dari galeri</p>
+    <h1 class="guest-feature-title">{{ event().coupleNames }}</h1>
+    <p class="guest-feature-description">
+      Tambah gambar kenangan anda daripada telefon atau komputer.
+    </p>
+  </header>
+  <section class="selection-panel guest-feature-card">
+    <span>Baki kapasiti: {{ remaining() - selected().length }} gambar</span
+    ><label class="picker"
+      >Pilih gambar<input
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        multiple
+        (change)="selectFiles($event)"
+    /></label>
+    @if (errors().length) {
+      <ul class="errors">
+        @for (error of errors(); track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    }
+    @if (selected().length) {
+      <ul class="grid">
+        @for (image of selected(); track image.previewUrl; let index = $index) {
+          <li>
+            <img [src]="image.previewUrl" [alt]="image.file.name" /><button
+              type="button"
+              (click)="remove(index)"
+            >
+              Buang
+            </button>
+          </li>
+        }
+      </ul>
+      <footer>
+        <span>{{ selected().length }} gambar dipilih</span
+        ><button type="button" (click)="cancel()">Batal</button
+        ><button type="button" (click)="confirm()" [disabled]="isConfirming()">
+          Tambah ke Album
+        </button>
+      </footer>
+    } @else {
+      <p class="empty">
+        Pilih satu atau lebih gambar JPG, PNG atau WEBP. Maksimum 10 MB setiap gambar.
+      </p>
+    }
+  </section>
+</main>

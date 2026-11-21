@@ -1,0 +1,137 @@
+:host {
+  display: block;
+}
+.page {
+  margin: auto;
+  max-width: 70rem;
+  padding: 2rem var(--page-gutter);
+  color: var(--color-cream);
+  min-block-size: 100dvh;
+}
+a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+section {
+  background: #25211b;
+  border: 1px solid var(--color-feature-border);
+  border-radius: 1rem;
+  margin: 2rem auto;
+  max-width: 55rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+}
+h1 {
+  font: 400 clamp(2.3rem, 6vw, 4rem) var(--font-display);
+  margin: 0.5rem;
+}
+section > p {
+  color: var(--color-gold-light);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.description {
+  color: var(--color-cream-soft);
+  letter-spacing: normal;
+  line-height: 1.6;
+  text-transform: none;
+}
+.selection-panel {
+  background: #151513;
+  border: 1px solid var(--color-feature-border);
+  border-radius: 1rem;
+  margin-block-start: var(--space-5);
+  padding: var(--space-4);
+}
+.selection-panel > span {
+  color: var(--color-cream-soft);
+  display: block;
+  font-size: var(--font-size-small);
+}
+.picker,
+footer button {
+  background: #25211b;
+  border: 1px solid rgb(203 165 108 / 0.45);
+  border-radius: 1rem;
+  color: #f7f1e4;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 700;
+  margin: 1.5rem 0.25rem;
+  min-block-size: 4.5rem;
+  padding: 1rem 1.75rem;
+}
+.picker:hover,
+footer button:not(:first-of-type):hover {
+  background: #302a22;
+}
+.picker:focus-within,
+footer button:focus-visible {
+  outline: 2px solid var(--color-gold-light);
+  outline-offset: 3px;
+}
+.picker input {
+  display: none;
+}
+.grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  list-style: none;
+  padding: 0;
+}
+.grid li {
+  background: var(--color-feature-card);
+  border: 1px solid var(--color-feature-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.grid img {
+  aspect-ratio: 1;
+  display: block;
+  object-fit: cover;
+  width: 100%;
+}
+.grid button {
+  background: transparent;
+  border: 0;
+  color: var(--color-cream);
+  cursor: pointer;
+  padding: 0.7rem;
+}
+.errors {
+  color: var(--color-gold-light);
+  text-align: left;
+}
+.empty {
+  color: var(--color-cream-soft);
+  padding: var(--space-5) 0 var(--space-2);
+}
+.empty::before {
+  color: var(--color-gold-light);
+  content: '▧';
+  display: block;
+  font-size: 2.25rem;
+  margin-block-end: var(--space-3);
+}
+footer {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+footer button {
+  margin: 0.25rem;
+}
+footer button:first-of-type {
+  background: var(--color-feature-card);
+  color: var(--color-cream);
+}
+footer button:disabled {
+  opacity: 0.5;
+}
+
+.guest-feature-title {
+  font-size: clamp(2.7rem, 7vw, 4.4rem);
+}

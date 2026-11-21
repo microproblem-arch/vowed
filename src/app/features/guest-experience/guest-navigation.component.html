@@ -1,0 +1,71 @@
+<main class="guest-page">
+  <a class="return-link" [routerLink]="['/e', event().slug]">&larr; Kembali ke jemputan</a>
+
+  <section class="guest-hub" aria-labelledby="guest-title">
+    <p class="eyebrow">Majlis perkahwinan</p>
+    <h1 id="guest-title">{{ event().coupleNames }}</h1>
+    <p class="event-date">{{ event().dateLabel }}</p>
+    <p class="welcome-message">
+      Terima kasih sudi hadir dan meraikan hari istimewa ini bersama kami.
+    </p>
+
+    <label class="guest-name" for="guest-name">Nama anda</label>
+    <input
+      id="guest-name"
+      [value]="guestName()"
+      (input)="updateGuestName($event)"
+      placeholder="Masukkan nama anda"
+      autocomplete="name"
+    />
+
+    <div class="photo-capacity">
+      <span aria-hidden="true">▣</span>
+      <div>
+        <small>Baki gambar</small
+        ><strong
+          >{{ event().guestPhotoLimit - photos().length }} / {{ event().guestPhotoLimit }}</strong
+        >
+      </div>
+    </div>
+
+    <button class="primary-action" type="button" (click)="openCamera()">
+      <span aria-hidden="true">▣</span> Jadi jurugambar kami
+      <small>Ambil gambar menggunakan kamera</small>
+    </button>
+
+    <nav class="guest-actions" aria-label="Pilihan kenangan tetamu">
+      <a [routerLink]="['/e', event().slug, 'guest', 'gallery']"
+        ><span aria-hidden="true">▧</span><strong>Pilih dari galeri</strong
+        ><small>Tambah gambar dari telefon</small><b aria-hidden="true">›</b></a
+      >
+      <a [routerLink]="['/e', event().slug, 'guest', 'album']"
+        ><span aria-hidden="true">▦</span><strong>Album saya</strong
+        ><small>Lihat gambar sementara</small><b aria-hidden="true">›</b></a
+      >
+      <a [routerLink]="['/e', event().slug, 'guest', 'wishes']"
+        ><span aria-hidden="true">✎</span><strong>Hantar ucapan</strong
+        ><small>Tinggalkan nota untuk pasangan</small><b aria-hidden="true">›</b></a
+      >
+      <button type="button" disabled>
+        <span aria-hidden="true">◉</span><strong>Mesej suara</strong><small>Akan datang</small>
+      </button>
+      <button type="button" disabled>
+        <span aria-hidden="true">✉</span><strong>Salam kaut</strong><small>Akan datang</small>
+      </button>
+    </nav>
+
+    <p class="prototype-note">
+      Versi demonstrasi — gambar dan ucapan hanya disimpan sementara dalam pelayar ini dan akan
+      hilang apabila halaman dimuat semula.
+    </p>
+  </section>
+
+  <app-camera-capture
+    [coupleNames]="event().coupleNames"
+    [dateLabel]="event().dateLabel"
+    [photoCount]="photos().length"
+    [maxPhotos]="event().guestPhotoLimit"
+    [hideLauncher]="true"
+    (photoCaptured)="addCapturedPhoto($event)"
+  />
+</main>

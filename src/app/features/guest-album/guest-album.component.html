@@ -1,0 +1,33 @@
+<main class="guest-feature-page album-page">
+  <a class="guest-feature-back" [routerLink]="['/e', event().slug, 'guest']"
+    >&larr; Kembali ke pusat kenangan</a
+  >
+  <header class="guest-feature-header">
+    <p class="guest-feature-label">Galeri kenangan</p>
+    <h1 class="guest-feature-title">{{ event().coupleNames }}</h1>
+    <p class="guest-feature-description">Gambar sementara untuk majlis ini.</p>
+  </header>
+  @if (photos().length) {
+    <ul class="grid">
+      @for (photo of photos(); track photo.id) {
+        <li>
+          <img [src]="photo.objectUrl" alt="Gambar oleh {{ photo.guestName || 'tetamu' }}" />
+          <div>
+            <strong>{{ photo.guestName || 'Tetamu' }}</strong><small>{{
+              photo.source === 'gallery' ? 'Dari galeri' : 'Kamera'
+            }}</small
+            ><button type="button" (click)="remove(photo.id)">Buang</button>
+          </div>
+        </li>
+      }
+    </ul>
+  } @else {
+    <section class="empty">
+      <span aria-hidden="true">▧</span>
+      <h2>Album masih kosong</h2>
+      <p>Gambar yang anda ambil atau pilih akan dipaparkan di sini.</p>
+      <a [routerLink]="['/e', event().slug, 'guest', 'gallery']">Tambah gambar</a>
+    </section>
+  }
+  <p class="notice">Versi demonstrasi — gambar hanya disimpan sementara dalam pelayar ini.</p>
+</main>

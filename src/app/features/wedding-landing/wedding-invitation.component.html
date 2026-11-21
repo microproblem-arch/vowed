@@ -1,0 +1,24 @@
+<main>
+  <app-wedding-header [event]="event()" />
+  <section id="welcome" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Together with their families</p>
+      <h1>{{ event().coupleNames }}</h1>
+      <div class="divider" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      <p class="date">{{ event().dateLabel }}</p>
+      <p class="venue">{{ event().venue }}</p>
+      <a class="button button-primary" [routerLink]="['/e', event().slug, 'guest']"
+        >Capture memories <span aria-hidden="true">→</span></a
+      >
+    </div>
+  </section>
+  <section id="celebrate" class="welcome-section" aria-labelledby="welcome-title">
+    <p class="eyebrow">A little note from the couple</p>
+    <h2 id="welcome-title">Welcome, dear guest</h2>
+    <p class="welcome-message">{{ event().welcomeMessage }}</p>
+    <p class="prototype-note">
+      <span aria-hidden="true">✦</span> Preview mode — event details shown here use demo data.
+    </p>
+  </section>
+</main>

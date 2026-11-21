@@ -1,0 +1,73 @@
+<main>
+  <app-wedding-header [event]="event()" />
+  <section
+    id="welcome"
+    class="hero"
+    [style.background-image]="'url(' + event().coverImageUrl + ')'"
+  >
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="eyebrow">Together with their families</p>
+      <h1>{{ event().coupleNames }}</h1>
+      <div class="divider" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      <p class="date">{{ event().dateLabel }}</p>
+      <p class="venue">{{ event().venue }}</p>
+      <a class="button button-primary" href="#celebrate"
+        >Celebrate with us <span aria-hidden="true">↓</span></a
+      >
+    </div>
+  </section>
+  <section id="celebrate" class="welcome-section" aria-labelledby="welcome-title">
+    <p class="eyebrow">A little note from the couple</p>
+    <h2 id="welcome-title">Welcome, dear guest</h2>
+    <p class="welcome-message">{{ event().welcomeMessage }}</p>
+    <p class="prototype-note">
+      <span aria-hidden="true">✦</span> Preview mode — event details shown here use demo data.
+    </p>
+  </section>
+  <section class="memory-section" aria-label="Guest photo capture">
+    <app-camera-capture
+      [coupleNames]="event().coupleNames"
+      [dateLabel]="event().dateLabel"
+      [photoCount]="photos().length"
+      (photoCaptured)="addCapturedPhoto($event)"
+    />
+
+    <div class="album" aria-labelledby="album-title">
+      <div class="album-heading">
+        <div>
+          <p class="eyebrow">Current browser session</p>
+          <h2 id="album-title">My temporary album</h2>
+        </div>
+        <span class="photo-count"
+          >{{ photos().length }} photo{{ photos().length === 1 ? '' : 's' }}</span
+        >
+      </div>
+
+      @if (photos().length === 0) {
+        <p class="empty-album">
+          Your captured photos will appear here. They are not uploaded and disappear when this page
+          is refreshed.
+        </p>
+      } @else {
+        <ul class="photo-grid">
+          @for (photo of photos(); track photo.id) {
+            <li>
+              <img [src]="photo.objectUrl" alt="Captured guest photo" />
+              <button
+                type="button"
+                (click)="removePhoto(photo.id)"
+                [attr.aria-label]="'Remove photo ' + photo.id"
+              >
+                Remove
+              </button>
+            </li>
+          }
+        </ul>
+        <p class="temporary-notice">
+          Temporary preview only — these images are not stored or shared.
+        </p>
+      }
+    </div>
+  </section>
+</main>
